@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Merienda',
+    'Arial',
+    serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+
+li {
+  list-style: none;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: blue;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+section {
+  padding: 50px 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+
+.container {
+  max-width: 1200px;
+  padding: 0 20px;
+  margin: 0 auto;
+
+  @include tablets {
+    padding: 0 15px;
+  }
+
+  @include mobile {
+    padding: 0 10px;
+  }
+}
+
+.main {
+  height: 100%;
+  background-image: linear-gradient(to right, #42f5ef, #e675ff);
+}
