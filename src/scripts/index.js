@@ -20,10 +20,14 @@ const tasks = [
   }, {});
 
   //Elements UI
-  const listContainer = document.querySelector('.list-tasks .tasks');
+  const listContainer = document.querySelector('.list-tasks .tasks'),
+    form = document.forms['add-task'],
+    formTitle = form.elements['title'],
+    formBody = form.elements['body'];
 
   //Handlers
   renderAllTasks(objectOfTasks);
+  form.addEventListener('submit', onFormSubmitHandler);
 
   //Functions
   function renderAllTasks(taskList) {
@@ -33,7 +37,7 @@ const tasks = [
       const li = createTaskTemplate(task);
       fragment.appendChild(li);
     });
-    listContainer.appendChild(fragment)
+    listContainer.appendChild(fragment);
   }
 
   function createTaskTemplate({ _id, title, body }) {
@@ -56,5 +60,34 @@ const tasks = [
     li.appendChild(deleteButton);
 
     return li;
+  }
+
+  function onFormSubmitHandler(e) {
+    e.preventDefault();
+    const titleValue = formTitle.value,
+      bodyValue = formBody.value;
+    
+    if (!titleValue || !bodyValue) {
+      alert('Please fill in all fields!');
+      return;
+    }
+
+    const task = createNewTask(titleValue, bodyValue);
+    const listItem = createTaskTemplate(task);
+    listContainer.insertAdjacentElement('afterbegin', listItem);
+    form.reset();
+  }
+
+  function createNewTask(title, body) {
+    const newTask = {
+      title,
+      body,
+      completed: false,
+      _id: `task-${Math.floor(Math.random() * 10000)}`
+    }
+
+    objectOfTasks[newTask._id] = newTask;
+
+    return {...newTask}
   }
 })(tasks);
