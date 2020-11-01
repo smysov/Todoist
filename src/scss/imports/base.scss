@@ -10,6 +10,10 @@ body {
     serif;
   font-size: 12px;
   font-weight: 400;
+
+  &.hidden {
+    overflow: hidden;
+  }
 }
 
 
@@ -63,5 +67,6 @@ section {
 
 .main {
   height: 100%;
-      background-color: #e5e5e5;
+  min-height: 100vh;
+  background-color: #e5e5e5;
 }

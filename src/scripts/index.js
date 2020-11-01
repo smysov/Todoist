@@ -23,12 +23,15 @@ const tasks = [
   const listContainer = document.querySelector('.list-tasks .tasks'),
     form = document.forms['add-task'],
     formTitle = form.elements['title'],
-    formBody = form.elements['body'];
+    formBody = form.elements['body'],
+    overlayFillField = document.querySelector('.overlay-add-task');
 
   //Handlers
   renderAllTasks(objectOfTasks);
   form.addEventListener('submit', onFormSubmitHandler);
   listContainer.addEventListener('click', onDeleteHandler);
+  createOverlayFillFieldTemplate();
+  overlayFillField.addEventListener('click', hideOverlayFillField);
 
   //Functions
   function renderAllTasks(taskList) {
@@ -70,7 +73,8 @@ const tasks = [
       bodyValue = formBody.value;
 
     if (!titleValue || !bodyValue) {
-      alert('Please fill in all fields!');
+      overlayFillField.classList.add('overlay-add-task--show');
+      document.body.classList.add('hidden');
       return;
     }
 
@@ -113,5 +117,40 @@ const tasks = [
   function deletTaskFromHtml(confirm, task) {
     if (!confirm) return;
     task.remove();
+  }
+
+  function renderOverlay(element) {
+    const fragment = document.createDocumentFragment();
+    fragment.appendChild(element)
+    overlayFillField.appendChild(element)
+  }
+
+  function createOverlayFillFieldTemplate() {
+    const container = document.createElement('div'),
+      title = document.createElement('p'),
+      button = document.createElement('button');
+
+    container.classList.add('overlay-add-task__wrapper');
+    title.classList.add('overlay-add-task__title');
+    button.classList.add('overlay-add-task__button');
+
+    title.textContent = `Are you sure you want to delete this task?`
+    button.textContent = `ok`
+
+    container.appendChild(title);
+    container.appendChild(button);
+
+    renderOverlay(container);
+  }
+
+  function hideOverlayFillField({ target }) {
+    
+    if (
+      target.classList.contains('overlay-add-task') ||
+      target.classList.contains('overlay-add-task__button')
+    ) {
+      overlayFillField.classList.remove('overlay-add-task--show');
+      document.body.classList.remove('hidden');
+    }
   }
 })(tasks);
