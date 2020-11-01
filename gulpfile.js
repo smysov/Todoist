@@ -133,7 +133,7 @@ task('server', () => {
 task('watch', () => {
   watch(`./${SRC_PATH}/scss/**/*.scss`, series('styles'));
   watch(`./${SRC_PATH}/*.html`, series('copy:html'));
-  watch(`./${SRC_PATH}/scripts/modules/*.js`, series('scripts'));
+  watch(`./${SRC_PATH}/scripts/*.js`, series('scripts'));
 });
 
 //ТАСКИ
