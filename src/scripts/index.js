@@ -24,7 +24,8 @@ const tasks = [
     form = document.forms['add-task'],
     formTitle = form.elements['title'],
     formBody = form.elements['body'],
-    overlayFillField = document.querySelector('.overlay-add-task');
+    overlayFillField = document.querySelector('.overlay-add-task'),
+    overlayDeleteTask = document.querySelector('.overlay-delete-task');
 
   //Handlers
   renderAllTasks(objectOfTasks);
@@ -32,6 +33,7 @@ const tasks = [
   listContainer.addEventListener('click', onDeleteHandler);
   createOverlayFillFieldTemplate();
   overlayFillField.addEventListener('click', hideOverlayFillField);
+  createOverlayDeleteTaskTemplate();
 
   //Functions
   function renderAllTasks(taskList) {
@@ -102,27 +104,51 @@ const tasks = [
       const parent = target.closest('[data-task-id]'),
         id = parent.dataset.taskId,
         confirmed = deleteTaskFromObject(id);
-      deletTaskFromHtml(confirmed, parent);
+      deletTaskFromHtml(parent);
     }
   }
 
   function deleteTaskFromObject(id) {
-    const { title } = objectOfTasks[id],
-      isConfirm = confirm(`Are you sure you want to delete this task ${title}`);
-    if (!isConfirm) return confirm;
-    delete objectOfTasks[id];
-    return confirm;
+    const { title } = objectOfTasks[id];
+    overlayDeleteTask.classList.add('overlay-delete-task--show');
+
+    overlayDeleteTask.addEventListener('click', (e) => {
+      if (
+        e.target.classList.contains('overlay-delete-task') ||
+        e.target.classList.contains('overlay-delete-task__confirm') ||
+        e.target.classList.contains('overlay-delete-task__cancel')
+      ) {
+        overlayDeleteTask.classList.remove('overlay-delete-task--show');
+        document.body.classList.remove('hidden');
+      }
+
+      if (e.target.classList.contains('overlay-delete-task__confirm')) {
+        delete objectOfTasks[id];
+      }
+    });
   }
 
-  function deletTaskFromHtml(confirm, task) {
-    if (!confirm) return;
-    task.remove();
+  function deletTaskFromHtml(task) {
+    overlayDeleteTask.addEventListener('click', (e) => {
+      if (
+        e.target.classList.contains('overlay-delete-task') ||
+        e.target.classList.contains('overlay-delete-task__confirm') ||
+        e.target.classList.contains('overlay-delete-task__cancel')
+      ) {
+        overlayDeleteTask.classList.remove('overlay-delete-task--show');
+        document.body.classList.remove('hidden');
+      }
+
+      if (e.target.classList.contains('overlay-delete-task__confirm')) {
+        task.remove();
+      }
+    });
   }
 
-  function renderOverlay(element) {
+  function renderOverlayFillField(element) {
     const fragment = document.createDocumentFragment();
-    fragment.appendChild(element)
-    overlayFillField.appendChild(element)
+    fragment.appendChild(element);
+    overlayFillField.appendChild(element);
   }
 
   function createOverlayFillFieldTemplate() {
@@ -134,17 +160,16 @@ const tasks = [
     title.classList.add('overlay-add-task__title');
     button.classList.add('overlay-add-task__button');
 
-    title.textContent = `Are you sure you want to delete this task?`
-    button.textContent = `ok`
+    title.textContent = `Please fill in all fields`;
+    button.textContent = `ok`;
 
     container.appendChild(title);
     container.appendChild(button);
 
-    renderOverlay(container);
+    renderOverlayFillField(container);
   }
 
   function hideOverlayFillField({ target }) {
-    
     if (
       target.classList.contains('overlay-add-task') ||
       target.classList.contains('overlay-add-task__button')
@@ -152,5 +177,36 @@ const tasks = [
       overlayFillField.classList.remove('overlay-add-task--show');
       document.body.classList.remove('hidden');
     }
+  }
+
+  function renderOverlayDeleteTask(element) {
+    const fragment = document.createDocumentFragment();
+    fragment.appendChild(element);
+    overlayDeleteTask.appendChild(element);
+  }
+
+  function createOverlayDeleteTaskTemplate() {
+    const container = document.createElement('div'),
+      header = document.createElement('p'),
+      innerButton = document.createElement('div'),
+      buttonConfirm = document.createElement('button'),
+      buttonDelete = document.createElement('button');
+
+    container.classList.add('overlay-delete-task__wrapper');
+    header.classList.add('overlay-delete-task__title');
+    innerButton.classList.add('overlay-delete-task__inner-button');
+    buttonConfirm.classList.add('overlay-delete-task__confirm');
+    buttonDelete.classList.add('overlay-delete-task__cancel');
+
+    header.textContent = `Are you sure you want to delete this task?`;
+    buttonConfirm.textContent = `ok`;
+    buttonDelete.textContent = `cancel`;
+
+    container.appendChild(header);
+    container.appendChild(innerButton);
+    innerButton.appendChild(buttonConfirm);
+    innerButton.appendChild(buttonDelete);
+
+    renderOverlayDeleteTask(container);
   }
 })(tasks);
