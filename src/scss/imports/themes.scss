@@ -1,0 +1,251 @@
+//Header
+
+body {
+  &.dark {
+
+    .header {
+      background-color: #000;
+
+      &__logo {
+        color: #fff;
+
+        &:hover {
+          opacity: .8;
+
+        }
+
+        &:focus {
+          outline: 1px solid rgba(171, 0, 0, 1);
+        }
+      }
+
+      &__theme-select {
+        background-color: rgba(171, 0, 0, 1);
+        border: 1px solid transparent;
+        color: #fff;
+
+        &:hover {
+          color: #c9c7c7;
+          background-color: rgba(224, 2, 2, 1);
+        }
+
+        &:focus {
+          background-color: rgba(138, 0, 0, 1);
+          outline: 1px solid rgba(171, 0, 0, 1);
+        }
+
+        &:active {
+          opacity: .7;
+        }
+      }
+    }
+  }
+}
+
+body {
+  &.dark {
+    .main {
+      background-color: rgba(33, 33, 33, .95);
+    }
+
+    .form {
+      background-color: rgba(33, 33, 33, .95);
+      box-shadow: 0 0 10px 0 #787775;
+
+      &__title {
+        color: #fff;
+      }
+
+      &__input {
+        color: #fff;
+        border: 2px solid rgba(92, 92, 92, 1);
+
+        &:hover {
+          border-color: rgba(158, 125, 125, 1);
+        }
+
+        &:focus {
+          border-color: rgba(255, 255, 255, 1)
+        }
+      }
+
+      &__textarea {
+        color: #fff;
+        border: 2px solid rgba(92, 92, 92, 1);
+
+        &:hover {
+          border-color: rgba(158, 125, 125, 1);
+        }
+
+        &:focus {
+          border-color: rgba(255, 255, 255, 1)
+        }
+      }
+
+      &__submit {
+        background-color: rgba(171, 0, 0, 1);
+        border: 2px solid transparent;
+        color: #fff;
+
+        &:hover {
+          color: #c9c7c7;
+          background-color: rgba(224, 2, 2, 1);
+        }
+
+        &:focus {
+          background-color: rgba(138, 0, 0, 1);
+          outline: 1px solid rgba(171, 0, 0, 1);
+        }
+
+        &:active {
+          opacity: .7;
+        }
+      }
+    }
+  }
+}
+
+body {
+  &.dark {
+    .tasks {
+      &__item {
+        background-color: rgba(33, 33, 33, .95);
+        box-shadow: 0 0 10px 0 #787775;
+      }
+
+      &__title {
+        color: #fff;
+      }
+
+      &__text {
+        color: #fff;
+      }
+
+      &__button {
+        background-color: rgba(171, 0, 0, 1);
+        border: 2px solid transparent;
+        color: #fff;
+
+        &:hover {
+          color: #c9c7c7;
+          background-color: rgba(224, 2, 2, 1);
+        }
+
+        &:focus {
+          background-color: rgba(138, 0, 0, 1);
+          outline: 1px solid rgba(171, 0, 0, 1);
+        }
+
+        &:active {
+          opacity: .7;
+        }
+      }
+    }
+  }
+}
+
+body {
+  &.dark {
+
+    .overlay-add-task,
+    .overlay-delete-task {
+      background-color: rgba(255, 255, 255, .1);
+    }
+
+    .overlay-add-task {
+
+      &__wrapper {
+        background-color: #000;
+      }
+
+      &__title,
+      &__text {
+        color: #fff;
+      }
+
+      &__button {
+        background-color: rgba(171, 0, 0, 1);
+        color: #fff;
+
+        &:hover {
+          color: #c9c7c7;
+          background-color: rgba(224, 2, 2, 1);
+        }
+
+        &:active {
+          opacity: .7;
+        }
+      }
+    }
+
+    .overlay-delete-task {
+
+      &__wrapper {
+        background-color: #000;
+      }
+
+      &__title,
+      &__text {
+        color: #fff;
+      }
+
+      &__button {
+        background-color: rgba(171, 0, 0, 1);
+        color: #fff;
+
+        &:hover {
+          color: #c9c7c7;
+          background-color: rgba(224, 2, 2, 1);
+        }
+
+        &:active {
+          opacity: .7;
+        }
+      }
+    }
+  }
+}
+
+body {
+  &.dark {
+    .footer {
+      background-color: #000;
+    }
+
+    .copyright__text {
+      color: #fff;
+
+      @include mobile {
+        font-size: 16px;
+      }
+    }
+
+    .copyright__icon {
+      fill: #fff;
+      transition: all .3s linear;
+
+      @include mobile {
+        width: 25px;
+        height: 25px;
+      }
+
+      &:hover {
+        fill: rgb(224, 2, 2);
+      }
+
+      &:active {
+        fill: rgb(117, 0, 0);
+      }
+
+      &--instagram {
+        width: 25px;
+        height: 25px;
+
+        @include mobile {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}
