@@ -13,8 +13,8 @@
   <header class="header">
     <div class="container">
       <div class="header__inner">
-        <a class="header__logo" href="index.html">Todolist</a>
-        <button class="header__theme-select">Change theme</button>
+        <a class="header__logo" href="index.html" title="Main page">Todolist</a>
+        <button class="header__theme-select">Change theme to black</button>
       </div>
     </div>
   </header>
@@ -57,15 +57,24 @@
             <p class="copyright__text">Copyright&copy;</p>
           </li>
           <li class="copyright__item">
-            <a class="copyright__link" href="https://github.com/smysov" target="_blank">
-              <img class="copyright__logo" src="./img/icons/github.svg" alt="Github">
+            <a class="copyright__link" href="https://github.com/smysov" target="_blank" title="Github">
+              <svg class="copyright__icon">
+                <use xlink:href="img/icons/sprite.svg#github"></use>
+              </svg>
+            </a>
+          </li>
+          <li class="copyright__item">
+            <a class="copyright__link" href="https://www.instagram.com/smysov" target="_blank" title="Instagram">
+              <svg class="copyright__icon copyright__icon--instagram">
+                <use xlink:href="img/icons/sprite.svg#instagram"></use>
+              </svg>
             </a>
           </li>
         </ul>
       </div>
     </div>
   </footer>
-  <script src="../scripts/index.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 
 </html>

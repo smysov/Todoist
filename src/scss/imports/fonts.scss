@@ -15,9 +15,25 @@
 }
 
 @font-face {
-  font-family: 'Vampiro';
-  src: url('../fonts/VampiroOne.woff2') format('woff2');
+  font-family: 'Sans-pro';
+  src: url('../fonts/FMBolyar-Sans-Pro-light.woff2') format('woff2');
   font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sans-pro';
+  src: url('../fonts/FMBolyar-Sans-Pro-bold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jura';
+  src: url('../fonts/Jura-Regular.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }

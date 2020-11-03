@@ -1,6 +1,6 @@
 .header {
   padding: 10px 0;
-  background-color: rgba(28, 126, 255, .8);
+  background-color: #e3e3e3;
 
   &__inner {
     display: flex;
@@ -17,7 +17,7 @@
     text-transform: uppercase;
     font-weight: 800;
     outline: blue;
-    transition: all 0.5s cubic-bezier(0.5, 0.71, 0.71, 0.57);
+    transition: all 0.3s cubic-bezier(0.5, 0.71, 0.71, 0.57);
 
     @include tablets {
       font-size: 24px;
@@ -29,7 +29,7 @@
 
     &:hover {
       opacity: .5;
-      color: #fff;
+      color: #000;
     }
 
     &:focus {
@@ -38,21 +38,27 @@
   }
 
   &__theme-select {
-    font-family: 'Vampiro', serif;
-    font-size: 18px;
+    font-family: 'Merienda',
+      'Times New Roman',
+      serif;
+    font-size: 14px;
     text-transform: uppercase;
-    background-color: rgba(41, 142, 230, 1);
+    background-color: rgba(41, 142, 230, 0.5);
     border: 1px solid #47a5fc;
     padding: 10px 10px;
-    border-radius: 15px;
-    transition: all .5s linear;
+    font-weight: 900;
+    transition: all .3s linear;
 
     @include tablets {
-      font-size: 15px;
+      font-size: 13px;
+      padding: 7px 7px;
+      max-width: 150px;
     }
 
     @include mobile {
       font-size: 12px;
+      padding: 5px 5px;
+      max-width: 130px;
     }
 
 

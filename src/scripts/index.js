@@ -102,8 +102,8 @@ const tasks = [
   function onDeleteHandler({ target }) {
     if (target.classList.contains('tasks__button')) {
       const parent = target.closest('[data-task-id]'),
-        id = parent.dataset.taskId,
-        confirmed = deleteTaskFromObject(id);
+        id = parent.dataset.taskId;
+      deleteTaskFromObject(id);
       deletTaskFromHtml(parent);
     }
   }
@@ -111,6 +111,7 @@ const tasks = [
   function deleteTaskFromObject(id) {
     const { title } = objectOfTasks[id];
     overlayDeleteTask.classList.add('overlay-delete-task--show');
+    document.body.classList.add('hidden');
 
     overlayDeleteTask.addEventListener('click', (e) => {
       if (
@@ -210,3 +211,20 @@ const tasks = [
     renderOverlayDeleteTask(container);
   }
 })(tasks);
+
+(function changeTheme() {
+  const changeThemeButton = document.querySelector('.header__theme-select'),
+    body = document.body;
+  changeThemeButton.addEventListener('click', toggleTheme);
+
+  if (!localStorage.theme) localStorage.theme = 'light';
+  document.body.className = localStorage.theme;
+
+  function toggleTheme({ target }) {
+    body.classList.toggle('dark');
+    changeThemeButton.textContent = body.classList.contains('dark')
+      ? 'change theme to light'
+      : 'change theme to dark';
+    localStorage.theme = document.body.className || 'light';
+  }
+})();

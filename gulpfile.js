@@ -13,8 +13,12 @@ const uglify = require('gulp-uglify');
 const gulpif = require('gulp-if');
 const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
+const svgo = require('gulp-svgo');
+const svgSprite = require('gulp-svg-sprite');
 const htmlmin = require('gulp-htmlmin');
 const csso = require('gulp-csso');
+const gulp = require('gulp');
+const ghPages = require('gulp-gh-pages');
 
 const env = process.env.NODE_ENV;
 
@@ -52,7 +56,6 @@ task('copy:pictures', () => {
     .pipe(dest(`${DIST_PATH}/img/content`))
     .pipe(reload({ stream: true }));
 });
-
 
 task('copy:icons', () => {
   return src(`${SRC_PATH}/images/icons/*`)
@@ -117,6 +120,29 @@ task('scripts', () => {
   );
 });
 
+task('icons', () => {
+  return src(`${SRC_PATH}/images/icons/*.svg`)
+    .pipe(
+      svgo({
+        plugins: [
+          {
+            removeAttrs: { attrs: '(data.*)' },
+          },
+        ],
+      })
+    )
+    .pipe(
+      svgSprite({
+        mode: {
+          symbol: {
+            sprite: '../sprite.svg',
+          },
+        },
+      })
+    )
+    .pipe(dest(`${DIST_PATH}/img/icons`));
+});
+
 //СЕРВЕР
 
 task('server', () => {
@@ -126,6 +152,12 @@ task('server', () => {
     },
     open: true,
   });
+});
+
+//ГИТХАБ-ПЭЙДЖЕС
+
+task('deploy', () => {
+  return gulp.src('./dist/**/*').pipe(ghPages());
 });
 
 //СЛЕЖКА ФАЙЛОВ
@@ -148,6 +180,7 @@ task(
       'copy:decor',
       'copy:icons',
       'copy:favicons',
+      'icons',
       'styles',
       'scripts',
       'fonts'
@@ -166,6 +199,7 @@ task(
       'copy:decor',
       'copy:icons',
       'copy:favicons',
+      'icons',
       'styles',
       'scripts',
       'fonts'

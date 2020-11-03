@@ -98,7 +98,6 @@
   &__confirm,
   &__cancel {
     @extend .overlay-add-task__button;
-    border-radius: 7px;
 
     @media (max-width: 408px) {
       font-size: 18px;
