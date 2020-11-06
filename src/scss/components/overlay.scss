@@ -8,13 +8,7 @@
   left: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, .5);
-  opacity: 1;
-  visibility: hidden;
 
-  &--show {
-    opacity: 1;
-    visibility: visible;
-  }
 
   &__wrapper {
     display: flex;
@@ -57,11 +51,6 @@
 
 .overlay-delete-task {
   @extend .overlay-add-task;
-
-  &--show {
-    opacity: 1;
-    visibility: visible;
-  }
 
   &__wrapper {
     @extend .overlay-add-task__wrapper;
