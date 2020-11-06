@@ -72,6 +72,7 @@ const tasks = [
       bodyValue = formBody.value;
 
     if (!titleValue || !bodyValue) {
+      renderOverlayValidation();
       document.body.classList.add('hidden');
       return;
     }
@@ -109,7 +110,7 @@ const tasks = [
     const fragment = document.createDocumentFragment(),
       overlay = document.createElement('div'),
       container = document.createElement('div'),
-      header = document.createElement('p'),
+      header = document.createElement('h2'),
       innerButton = document.createElement('div'),
       buttonConfirm = document.createElement('button'),
       buttonDelete = document.createElement('button');
@@ -146,6 +147,38 @@ const tasks = [
     buttonConfirm.addEventListener('click', (e) => {
       delete objectOfTasks[id];
       task.remove();
+    });
+  }
+
+  function renderOverlayValidation() {
+    const fragment = document.createDocumentFragment(),
+      overlay = document.createElement('div'),
+      container = document.createElement('div'),
+      header = document.createElement('h2'),
+      button = document.createElement('button');
+
+    overlay.classList.add('overlay-add-task');
+    container.classList.add('overlay-add-task__wrapper');
+    header.classList.add('overlay-add-task__title');
+    button.classList.add('overlay-add-task__button');
+
+    header.textContent = 'Please fill in all fields';
+    button.textContent = 'ok';
+
+    overlay.appendChild(container);
+    container.appendChild(header);
+    container.appendChild(button);
+
+    fragment.appendChild(overlay);
+    document.querySelector('.main').appendChild(fragment);
+
+    overlay.addEventListener('click', (e) => {
+      const closeOverlay =
+        e.target.tagName === 'BUTTON' || e.target === overlay;
+      if (closeOverlay) {
+        document.body.classList.remove('hidden');
+        overlay.remove();
+      }
     });
   }
 })(tasks);
