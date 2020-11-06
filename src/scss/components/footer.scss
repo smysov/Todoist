@@ -1,6 +1,5 @@
 .footer {
-  padding: 20px 0;
-  background-color: #e3e3e3;
+  @extend .header;
 
   &__inner {
     display: flex;

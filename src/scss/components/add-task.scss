@@ -99,22 +99,7 @@
     background-color: rgba(41, 142, 230, .5);
     transition: all .3s linear;
 
-    &:hover {
-      background-color: #1e9df7;
-      color: #f5f5f5;
-    }
-
-    &:focus {
-      background-color: #0263c9;
-      color: #fff;
-    }
-
-    &:active {
-      background-color: #80bfff;
-      border: 2px solid #0263c9;
-      color: #000;
-
-    }
+    @include effects-button;
 
     @include mobile {
       font-size: 15px;
