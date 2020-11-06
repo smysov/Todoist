@@ -31,9 +31,6 @@ const tasks = [
   renderAllTasks(objectOfTasks);
   form.addEventListener('submit', onFormSubmitHandler);
   listContainer.addEventListener('click', onDeleteHandler);
-  createOverlayFillFieldTemplate();
-  overlayFillField.addEventListener('click', hideOverlayFillField);
-  createOverlayDeleteTaskTemplate();
 
   //Functions
   function renderAllTasks(taskList) {
@@ -75,7 +72,7 @@ const tasks = [
       bodyValue = formBody.value;
 
     if (!titleValue || !bodyValue) {
-      overlayFillField.classList.add('overlay-add-task--show');
+      renderOverlayValidation();
       document.body.classList.add('hidden');
       return;
     }
@@ -103,112 +100,86 @@ const tasks = [
     if (target.classList.contains('tasks__button')) {
       const parent = target.closest('[data-task-id]'),
         id = parent.dataset.taskId;
-      deleteTaskFromObject(id);
-      deletTaskFromHtml(parent);
+      renderOverlayDelete(id, parent);
     }
   }
 
-  function deleteTaskFromObject(id) {
+  function renderOverlayDelete(id, task) {
     const { title } = objectOfTasks[id];
-    overlayDeleteTask.classList.add('overlay-delete-task--show');
-    document.body.classList.add('hidden');
 
-    overlayDeleteTask.addEventListener('click', (e) => {
-      if (
-        e.target.classList.contains('overlay-delete-task') ||
-        e.target.classList.contains('overlay-delete-task__confirm') ||
-        e.target.classList.contains('overlay-delete-task__cancel')
-      ) {
-        overlayDeleteTask.classList.remove('overlay-delete-task--show');
-        document.body.classList.remove('hidden');
-      }
-
-      if (e.target.classList.contains('overlay-delete-task__confirm')) {
-        delete objectOfTasks[id];
-      }
-    });
-  }
-
-  function deletTaskFromHtml(task) {
-    overlayDeleteTask.addEventListener('click', (e) => {
-      if (
-        e.target.classList.contains('overlay-delete-task') ||
-        e.target.classList.contains('overlay-delete-task__confirm') ||
-        e.target.classList.contains('overlay-delete-task__cancel')
-      ) {
-        overlayDeleteTask.classList.remove('overlay-delete-task--show');
-        document.body.classList.remove('hidden');
-      }
-
-      if (e.target.classList.contains('overlay-delete-task__confirm')) {
-        task.remove();
-      }
-    });
-  }
-
-  function renderOverlayFillField(element) {
-    const fragment = document.createDocumentFragment();
-    fragment.appendChild(element);
-    overlayFillField.appendChild(element);
-  }
-
-  function createOverlayFillFieldTemplate() {
-    const container = document.createElement('div'),
-      title = document.createElement('p'),
-      button = document.createElement('button');
-
-    container.classList.add('overlay-add-task__wrapper');
-    title.classList.add('overlay-add-task__title');
-    button.classList.add('overlay-add-task__button');
-
-    title.textContent = `Please fill in all fields`;
-    button.textContent = `ok`;
-
-    container.appendChild(title);
-    container.appendChild(button);
-
-    renderOverlayFillField(container);
-  }
-
-  function hideOverlayFillField({ target }) {
-    if (
-      target.classList.contains('overlay-add-task') ||
-      target.classList.contains('overlay-add-task__button')
-    ) {
-      overlayFillField.classList.remove('overlay-add-task--show');
-      document.body.classList.remove('hidden');
-    }
-  }
-
-  function renderOverlayDeleteTask(element) {
-    const fragment = document.createDocumentFragment();
-    fragment.appendChild(element);
-    overlayDeleteTask.appendChild(element);
-  }
-
-  function createOverlayDeleteTaskTemplate() {
-    const container = document.createElement('div'),
-      header = document.createElement('p'),
+    const fragment = document.createDocumentFragment(),
+      overlay = document.createElement('div'),
+      container = document.createElement('div'),
+      header = document.createElement('h2'),
       innerButton = document.createElement('div'),
       buttonConfirm = document.createElement('button'),
       buttonDelete = document.createElement('button');
 
+    overlay.classList.add('overlay-delete-task');
     container.classList.add('overlay-delete-task__wrapper');
     header.classList.add('overlay-delete-task__title');
     innerButton.classList.add('overlay-delete-task__inner-button');
     buttonConfirm.classList.add('overlay-delete-task__confirm');
     buttonDelete.classList.add('overlay-delete-task__cancel');
+    document.body.classList.add('hidden');
 
-    header.textContent = `Are you sure you want to delete this task?`;
+    header.textContent = `Are you sure you want to delete this task ${title}?`;
     buttonConfirm.textContent = `ok`;
     buttonDelete.textContent = `cancel`;
 
+    overlay.appendChild(container);
     container.appendChild(header);
     container.appendChild(innerButton);
     innerButton.appendChild(buttonConfirm);
     innerButton.appendChild(buttonDelete);
 
-    renderOverlayDeleteTask(container);
+    fragment.appendChild(overlay);
+    document.querySelector('.main').appendChild(fragment);
+
+    overlay.addEventListener('click', (e) => {
+      const isClose = e.target.tagName === 'BUTTON' || e.target === overlay;
+      if (isClose) {
+        overlay.remove();
+        document.body.classList.remove('hidden');
+      }
+    });
+
+    buttonConfirm.addEventListener('click', (e) => {
+      delete objectOfTasks[id];
+      task.remove();
+    });
+  }
+
+  function renderOverlayValidation() {
+    const fragment = document.createDocumentFragment(),
+      overlay = document.createElement('div'),
+      container = document.createElement('div'),
+      header = document.createElement('h2'),
+      button = document.createElement('button');
+
+    overlay.classList.add('overlay-add-task');
+    container.classList.add('overlay-add-task__wrapper');
+    header.classList.add('overlay-add-task__title');
+    button.classList.add('overlay-add-task__button');
+
+    header.textContent = 'Please fill in all fields';
+    button.textContent = 'ok';
+
+    overlay.appendChild(container);
+    container.appendChild(header);
+    container.appendChild(button);
+
+    fragment.appendChild(overlay);
+    document.querySelector('.main').appendChild(fragment);
+
+    overlay.addEventListener('click', (e) => {
+      const closeOverlay =
+        e.target.tagName === 'BUTTON' || e.target === overlay;
+      if (closeOverlay) {
+        document.body.classList.remove('hidden');
+        overlay.remove();
+      }
+    });
   }
 })(tasks);
 

@@ -1,11 +1,91 @@
 @mixin tablets {
-  	@media (max-width: 768px) {
-  	  @content;
-  	}
+	@media (max-width: 768px) {
+		@content;
+	}
 }
 
 @mixin mobile {
-  	@media (max-width: 320px) {
-  	  @content;
-  	}
+	@media (max-width: 320px) {
+		@content;
+	}
+}
+
+@mixin input {
+	font-family: 'Jura',
+		'Georgia',
+		sans-serif;
+	font-size: 20px;
+	border: 1px solid rgba(87, 199, 255, 1);
+	background-color: transparent;
+	border-radius: 5px;
+	padding: 10px 20px 10px 10px;
+	letter-spacing: 1px;
+	outline: blue;
+	transition: border-color .3s linear;
+
+	&:hover {
+		border-color: #1e9df7;
+	}
+
+	&:focus {
+		border-color: #0078f7;
+	}
+
+	&::placeholder {
+		font-size: 18px;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+}
+
+@mixin dark-button {
+	background-color: rgba(171, 0, 0, 1);
+	border: 1px solid transparent;
+	color: #fff;
+
+	&:hover {
+		color: #c9c7c7;
+		background-color: rgba(224, 2, 2, 1);
+	}
+
+	&:focus {
+		background-color: rgba(138, 0, 0, 1);
+		outline: 1px solid rgba(171, 0, 0, 1);
+	}
+
+	&:active {
+		opacity: .7;
+	}
+}
+
+@mixin dark-input {
+	color: #fff;
+	border: 1px solid rgba(92, 92, 92, 1);
+
+	&:hover {
+		border-color: rgba(158, 125, 125, 1);
+	}
+
+	&:focus {
+		border-color: rgba(255, 255, 255, 1)
+	}
+}
+
+@mixin effects-button {
+	&:hover {
+		background-color: #1e9df7;
+		color: #f5f5f5;
+	}
+
+	&:focus {
+		background-color: #0263c9;
+		color: #fff;
+	}
+
+	&:active {
+		background-color: #80bfff;
+		border: 1px solid #0263c9;
+		color: #000;
+
+	}
 }

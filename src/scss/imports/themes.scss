@@ -20,23 +20,7 @@ body {
       }
 
       &__theme-select {
-        background-color: rgba(171, 0, 0, 1);
-        border: 1px solid transparent;
-        color: #fff;
-
-        &:hover {
-          color: #c9c7c7;
-          background-color: rgba(224, 2, 2, 1);
-        }
-
-        &:focus {
-          background-color: rgba(138, 0, 0, 1);
-          outline: 1px solid rgba(171, 0, 0, 1);
-        }
-
-        &:active {
-          opacity: .7;
-        }
+        @include dark-button;
       }
     }
   }
@@ -48,7 +32,8 @@ body {
       background-color: rgba(33, 33, 33, .95);
     }
 
-    .form {
+    .form,
+    .tasks__item {
       background-color: rgba(33, 33, 33, .95);
       box-shadow: 0 0 10px 0 #787775;
 
@@ -57,49 +42,15 @@ body {
       }
 
       &__input {
-        color: #fff;
-        border: 2px solid rgba(92, 92, 92, 1);
-
-        &:hover {
-          border-color: rgba(158, 125, 125, 1);
-        }
-
-        &:focus {
-          border-color: rgba(255, 255, 255, 1)
-        }
+        @include dark-input;
       }
 
       &__textarea {
-        color: #fff;
-        border: 2px solid rgba(92, 92, 92, 1);
-
-        &:hover {
-          border-color: rgba(158, 125, 125, 1);
-        }
-
-        &:focus {
-          border-color: rgba(255, 255, 255, 1)
-        }
+        @include dark-input;
       }
 
       &__submit {
-        background-color: rgba(171, 0, 0, 1);
-        border: 2px solid transparent;
-        color: #fff;
-
-        &:hover {
-          color: #c9c7c7;
-          background-color: rgba(224, 2, 2, 1);
-        }
-
-        &:focus {
-          background-color: rgba(138, 0, 0, 1);
-          outline: 1px solid rgba(171, 0, 0, 1);
-        }
-
-        &:active {
-          opacity: .7;
-        }
+        @include dark-button;
       }
     }
   }
@@ -108,10 +59,6 @@ body {
 body {
   &.dark {
     .tasks {
-      &__item {
-        background-color: rgba(33, 33, 33, .95);
-        box-shadow: 0 0 10px 0 #787775;
-      }
 
       &__title {
         color: #fff;
@@ -122,23 +69,7 @@ body {
       }
 
       &__button {
-        background-color: rgba(171, 0, 0, 1);
-        border: 2px solid transparent;
-        color: #fff;
-
-        &:hover {
-          color: #c9c7c7;
-          background-color: rgba(224, 2, 2, 1);
-        }
-
-        &:focus {
-          background-color: rgba(138, 0, 0, 1);
-          outline: 1px solid rgba(171, 0, 0, 1);
-        }
-
-        &:active {
-          opacity: .7;
-        }
+        @include dark-button;
       }
     }
   }
@@ -164,17 +95,7 @@ body {
       }
 
       &__button {
-        background-color: rgba(171, 0, 0, 1);
-        color: #fff;
-
-        &:hover {
-          color: #c9c7c7;
-          background-color: rgba(224, 2, 2, 1);
-        }
-
-        &:active {
-          opacity: .7;
-        }
+        @include dark-button;
       }
     }
 
@@ -190,17 +111,7 @@ body {
       }
 
       &__button {
-        background-color: rgba(171, 0, 0, 1);
-        color: #fff;
-
-        &:hover {
-          color: #c9c7c7;
-          background-color: rgba(224, 2, 2, 1);
-        }
-
-        &:active {
-          opacity: .7;
-        }
+        @include dark-button;
       }
     }
   }
