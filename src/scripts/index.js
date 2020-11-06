@@ -23,9 +23,8 @@ const tasks = [
   const listContainer = document.querySelector('.list-tasks .tasks'),
     form = document.forms['add-task'],
     formTitle = form.elements['title'],
-    formBody = form.elements['body'],
-    overlayFillField = document.querySelector('.overlay-add-task'),
-    overlayDeleteTask = document.querySelector('.overlay-delete-task');
+    formBody = form.elements['body'];
+
 
   //Handlers
   renderAllTasks(objectOfTasks);
@@ -35,6 +34,7 @@ const tasks = [
   //Functions
   function renderAllTasks(taskList) {
     const fragment = document.createDocumentFragment();
+
 
     Object.values(objectOfTasks).forEach((task) => {
       const li = createTaskTemplate(task);
@@ -76,7 +76,8 @@ const tasks = [
       document.body.classList.add('hidden');
       return;
     }
-
+    
+    
     const task = createNewTask(titleValue, bodyValue);
     const listItem = createTaskTemplate(task);
     listContainer.insertAdjacentElement('afterbegin', listItem);
@@ -90,24 +91,21 @@ const tasks = [
       completed: false,
       _id: `task-${Math.floor(Math.random() * 10000)}`,
     };
-
     objectOfTasks[newTask._id] = newTask;
-
     return { ...newTask };
   }
 
   function onDeleteHandler({ target }) {
     if (target.classList.contains('tasks__button')) {
       const parent = target.closest('[data-task-id]'),
-        id = parent.dataset.taskId;
-      renderOverlayDelete(id, parent);
+        id = parent.dataset.taskId,
+        { title } = objectOfTasks[id];
+      renderOverlayDelete(id, parent, title);
     }
   }
 
-  function renderOverlayDelete(id, task) {
-    const { title } = objectOfTasks[id];
-
-    const fragment = document.createDocumentFragment(),
+  function renderOverlayDelete(id, task, title) {
+    let fragment = document.createDocumentFragment(),
       overlay = document.createElement('div'),
       container = document.createElement('div'),
       header = document.createElement('h2'),
@@ -123,7 +121,8 @@ const tasks = [
     buttonDelete.classList.add('overlay-delete-task__cancel');
     document.body.classList.add('hidden');
 
-    header.textContent = `Are you sure you want to delete this task ${title}?`;
+    header.textContent = `Are you sure you want to delete
+     this task "${title}"?`;
     buttonConfirm.textContent = `ok`;
     buttonDelete.textContent = `cancel`;
 
@@ -137,8 +136,9 @@ const tasks = [
     document.querySelector('.main').appendChild(fragment);
 
     overlay.addEventListener('click', (e) => {
-      const isClose = e.target.tagName === 'BUTTON' || e.target === overlay;
-      if (isClose) {
+      const closeOverlay =
+        e.target.tagName === 'BUTTON' || e.target === overlay;
+      if (closeOverlay) {
         overlay.remove();
         document.body.classList.remove('hidden');
       }
