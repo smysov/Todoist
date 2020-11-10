@@ -1,34 +1,29 @@
 const tasks = [
   {
-    _id: '5d2ca9e2e03d40b326596aa7',
-    completed: true,
-    body: 'Watch an exciting action movie starring Gerard Butler',
     title: 'Watch an interesting movie after work',
+    body: 'Watch an exciting action movie starring Gerard Butler',
+    completed: true,
+    _id: 'task-1',
   },
   {
-    _id: '5d2ca9e29c8a94095c1288e0',
-    completed: false,
-    body: 'Work out in the gym and swim in the pool',
     title: 'Go to a training session',
+    body: 'Work out in the gym and swim in the pool',
+    completed: false,
+    _id: 'task-2',
   },
 ];
 
 (function (arrayOfTasks) {
-  const objectOfTasks = arrayOfTasks.reduce((acc, task) => {
-    acc[task._id] = task;
-    return acc;
-  }, {});
+  const tasks = loadTasksFromLocalStorage() || arrayOfTasks;
 
   //Elements UI
   const listContainer = document.querySelector('.list-tasks .tasks'),
     form = document.forms['add-task'],
     formTitle = form.elements['title'],
-    formBody = form.elements['body'],
-    overlayFillField = document.querySelector('.overlay-add-task'),
-    overlayDeleteTask = document.querySelector('.overlay-delete-task');
+    formBody = form.elements['body'];
 
   //Handlers
-  renderAllTasks(objectOfTasks);
+  renderAllTasks(tasks);
   form.addEventListener('submit', onFormSubmitHandler);
   listContainer.addEventListener('click', onDeleteHandler);
 
@@ -36,7 +31,7 @@ const tasks = [
   function renderAllTasks(taskList) {
     const fragment = document.createDocumentFragment();
 
-    Object.values(objectOfTasks).forEach((task) => {
+    taskList.forEach((task) => {
       const li = createTaskTemplate(task);
       fragment.appendChild(li);
     });
@@ -90,24 +85,22 @@ const tasks = [
       completed: false,
       _id: `task-${Math.floor(Math.random() * 10000)}`,
     };
-
-    objectOfTasks[newTask._id] = newTask;
-
-    return { ...newTask };
+    tasks.unshift(newTask);
+    saveTasksToLocalStorage(tasks);
+    return newTask;
   }
 
   function onDeleteHandler({ target }) {
     if (target.classList.contains('tasks__button')) {
       const parent = target.closest('[data-task-id]'),
-        id = parent.dataset.taskId;
-      renderOverlayDelete(id, parent);
+        id = parent.dataset.taskId,
+        { title } = tasks.find((item) => item._id === id);
+      renderOverlayDelete(id, parent, title);
     }
   }
 
-  function renderOverlayDelete(id, task) {
-    const { title } = objectOfTasks[id];
-
-    const fragment = document.createDocumentFragment(),
+  function renderOverlayDelete(id, task, title) {
+    let fragment = document.createDocumentFragment(),
       overlay = document.createElement('div'),
       container = document.createElement('div'),
       header = document.createElement('h2'),
@@ -123,7 +116,8 @@ const tasks = [
     buttonDelete.classList.add('overlay-delete-task__cancel');
     document.body.classList.add('hidden');
 
-    header.textContent = `Are you sure you want to delete this task ${title}?`;
+    header.textContent = `Are you sure you want to delete
+     this task "${title}"?`;
     buttonConfirm.textContent = `ok`;
     buttonDelete.textContent = `cancel`;
 
@@ -137,15 +131,19 @@ const tasks = [
     document.querySelector('.main').appendChild(fragment);
 
     overlay.addEventListener('click', (e) => {
-      const isClose = e.target.tagName === 'BUTTON' || e.target === overlay;
-      if (isClose) {
+      const closeOverlay =
+        e.target.tagName === 'BUTTON' || e.target === overlay;
+      if (closeOverlay) {
         overlay.remove();
         document.body.classList.remove('hidden');
       }
     });
 
     buttonConfirm.addEventListener('click', (e) => {
-      delete objectOfTasks[id];
+      //remove item from data
+      const index = tasks.findIndex((item) => item._id === id);
+      tasks.splice(index, 1);
+      saveTasksToLocalStorage(tasks);
       task.remove();
     });
   }
@@ -180,6 +178,14 @@ const tasks = [
         overlay.remove();
       }
     });
+  }
+
+  function loadTasksFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('tasks'));
+  }
+
+  function saveTasksToLocalStorage(tasks) {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 })(tasks);
 
