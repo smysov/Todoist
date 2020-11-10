@@ -1,23 +1,20 @@
 const tasks = [
   {
-    _id: '5d2ca9e2e03d40b326596aa7',
-    completed: true,
-    body: 'Watch an exciting action movie starring Gerard Butler',
     title: 'Watch an interesting movie after work',
+    body: 'Watch an exciting action movie starring Gerard Butler',
+    completed: true,
+    _id: 'task-1',
   },
   {
-    _id: '5d2ca9e29c8a94095c1288e0',
-    completed: false,
-    body: 'Work out in the gym and swim in the pool',
     title: 'Go to a training session',
+    body: 'Work out in the gym and swim in the pool',
+    completed: false,
+    _id: 'task-2',
   },
 ];
 
 (function (arrayOfTasks) {
-  const objectOfTasks = arrayOfTasks.reduce((acc, task) => {
-    acc[task._id] = task;
-    return acc;
-  }, {});
+  const tasks = loadTasksFromLocalStorage() || arrayOfTasks;
 
   //Elements UI
   const listContainer = document.querySelector('.list-tasks .tasks'),
@@ -25,9 +22,8 @@ const tasks = [
     formTitle = form.elements['title'],
     formBody = form.elements['body'];
 
-
   //Handlers
-  renderAllTasks(objectOfTasks);
+  renderAllTasks(tasks);
   form.addEventListener('submit', onFormSubmitHandler);
   listContainer.addEventListener('click', onDeleteHandler);
 
@@ -35,8 +31,7 @@ const tasks = [
   function renderAllTasks(taskList) {
     const fragment = document.createDocumentFragment();
 
-
-    Object.values(objectOfTasks).forEach((task) => {
+    taskList.forEach((task) => {
       const li = createTaskTemplate(task);
       fragment.appendChild(li);
     });
@@ -76,8 +71,7 @@ const tasks = [
       document.body.classList.add('hidden');
       return;
     }
-    
-    
+
     const task = createNewTask(titleValue, bodyValue);
     const listItem = createTaskTemplate(task);
     listContainer.insertAdjacentElement('afterbegin', listItem);
@@ -91,15 +85,16 @@ const tasks = [
       completed: false,
       _id: `task-${Math.floor(Math.random() * 10000)}`,
     };
-    objectOfTasks[newTask._id] = newTask;
-    return { ...newTask };
+    tasks.unshift(newTask);
+    saveTasksToLocalStorage(tasks);
+    return newTask;
   }
 
   function onDeleteHandler({ target }) {
     if (target.classList.contains('tasks__button')) {
       const parent = target.closest('[data-task-id]'),
         id = parent.dataset.taskId,
-        { title } = objectOfTasks[id];
+        { title } = tasks.find((item) => item._id === id);
       renderOverlayDelete(id, parent, title);
     }
   }
@@ -145,7 +140,10 @@ const tasks = [
     });
 
     buttonConfirm.addEventListener('click', (e) => {
-      delete objectOfTasks[id];
+      //remove item from data
+      const index = tasks.findIndex((item) => item._id === id);
+      tasks.splice(index, 1);
+      saveTasksToLocalStorage(tasks);
       task.remove();
     });
   }
@@ -180,6 +178,14 @@ const tasks = [
         overlay.remove();
       }
     });
+  }
+
+  function loadTasksFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('tasks'));
+  }
+
+  function saveTasksToLocalStorage(tasks) {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 })(tasks);
 
