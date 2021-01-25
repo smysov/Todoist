@@ -4,18 +4,21 @@
 
 <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/smysov/Todolist?style=plastic">
 
-<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/smysov/Pink-application?style=plastic">
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/smysov/Todolist?style=plastic">
 
 
 <img alt="GitHub closed pull requests" src="https://img.shields.io/github/issues-pr-closed/smysov/Todolist?style=plastic">
 
 <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/smysov/Todolist?style=plastic">
 
-<img alt="GitHub all releases" src="https://img.shields.io/github/downloads/smysov/Todolist/total">
+<img alt="GitHub all releases" src="https://img.shields.io/github/downloads/smysov/Todolist/total?style=plastic">
+
+<img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/smysov/Todolist?label=package.json&style=plastic">
+
 </p>
 
-Simple "Todolist" with possibility adding, and deleting of task.  
-As well implemented change theme application!  
+Simple "Todolist" with possibility adding, and deleting of task.
+As well implemented change theme application!
 
 <p align="center">
 
