@@ -29,14 +29,6 @@ As well implemented change theme application!
 ---
 ## [View a demo](https://smysov.github.io/Todolist/)
 
-# Technologies
-
-1. **HTML**
-2. **CSS**
-3. **JavaScript**
-4. **Gulp**
-
-
 ## Installation
 
 First you need to clone repository
