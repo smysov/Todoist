@@ -94,13 +94,14 @@ const tasks = [
     if (target.classList.contains('tasks__button')) {
       const parent = target.closest('[data-task-id]'),
         id = parent.dataset.taskId,
-        { title } = tasks.find((item) => item._id === id);
-      renderOverlayDelete(id, parent, title);
+        [{ title }] = tasks;
+      deleteTasks = tasks.find((item) => item._id === id);
+      renderOverlayDeleteTask(id, parent, title);
     }
   }
 
-  function renderOverlayDelete(id, task, title) {
-    let fragment = document.createDocumentFragment(),
+  function renderOverlayDeleteTask(id, task, title) {
+    const fragment = document.createDocumentFragment(),
       overlay = document.createElement('div'),
       container = document.createElement('div'),
       header = document.createElement('h2'),
@@ -130,6 +131,12 @@ const tasks = [
     fragment.appendChild(overlay);
     document.querySelector('.main').appendChild(fragment);
 
+    deleteOverlayTask()
+    deleteTask(id, task);
+  }
+
+  function deleteOverlayTask() {
+    const overlay = document.querySelector('.overlay-delete-task')
     overlay.addEventListener('click', (e) => {
       const closeOverlay =
         e.target.tagName === 'BUTTON' || e.target === overlay;
@@ -138,7 +145,10 @@ const tasks = [
         document.body.classList.remove('hidden');
       }
     });
+  }
 
+  function deleteTask(id, task) {
+    const buttonConfirm = document.querySelector('.overlay-delete-task__confirm');
     buttonConfirm.addEventListener('click', (e) => {
       //remove item from data
       const index = tasks.findIndex((item) => item._id === id);
@@ -170,6 +180,11 @@ const tasks = [
     fragment.appendChild(overlay);
     document.querySelector('.main').appendChild(fragment);
 
+    deleteOverlayValidation()
+  }
+
+  function deleteOverlayValidation() {
+    const overlay = document.querySelector('.overlay-add-task')
     overlay.addEventListener('click', (e) => {
       const closeOverlay =
         e.target.tagName === 'BUTTON' || e.target === overlay;
